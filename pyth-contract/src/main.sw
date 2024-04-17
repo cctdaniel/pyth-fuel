@@ -615,3 +615,23 @@ fn submit_new_guardian_set(encoded_vm: Bytes) {
         new_guardian_set_index: upgrade.new_guardian_set_index,
     })
 }
+
+
+abi PythGovernance {
+    #[storage(read)]
+    fn verify_governance_vm(encoded_vm: Bytes) -> WormholeVM;
+}
+
+impl PythGovernance for Contract {
+    #[storage(read)]
+    fn verify_governance_vm(encoded_vm: Bytes) -> WormholeVM {
+        let vm = WormholeVM::parse_and_verify_wormhole_vm(
+            current_guardian_set_index(),
+            encoded_vm,
+            storage
+                .wormhole_guardian_sets,
+        );
+
+        vm
+    }
+}
