@@ -493,7 +493,7 @@ impl PythInfo for Contract {
 
     #[storage(read)]
     fn valid_data_source(data_source: DataSource) -> bool {
-        data_source.is_valid(storage.is_valid_data_source)
+        data_source.is_valid_data_source(storage.is_valid_data_source)
     }
 }
 
@@ -631,6 +631,22 @@ impl PythGovernance for Contract {
             storage
                 .wormhole_guardian_sets,
         );
+
+        // let data_source = DataSource {
+        //     chain_id: vm.emitter_chain_id,
+        //     emitter_address: vm.emitter_address,
+        // };
+        // require(
+        //     storage
+        //         .is_valid_governance_data_source(data_source),
+        //     PythError::InvalidGovernanceDataSource,
+        // );
+
+        // require(vm.sequence > last_executed_governance_sequence(),
+        //     PythError::OldGovernanceMessage,
+        // );
+
+        // set_last_executed_governance_sequence(vm.sequence);
 
         vm
     }
