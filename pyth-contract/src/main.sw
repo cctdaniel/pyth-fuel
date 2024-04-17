@@ -77,6 +77,19 @@ storage {
     /// This includes attestation delay, block time, and potential clock drift
     /// between the source/target chains.
     valid_time_period_seconds: u64 = 0,
+    // Governance data source. VAA messages from this source can change this contract
+    // state. e.g., upgrade the contract, change the valid data sources, and more.
+    governance_data_source: DataSource = DataSource {
+        chain_id: 0u16,
+        emitter_address: ZERO_B256,
+    },
+    // Sequence number of the last executed governance message. Any governance message
+    // with a lower or equal sequence number will be discarded. This prevents double-execution,
+    // and also makes sure that messages are executed in the right order.
+    last_executed_governance_sequence: u64 = 0,
+    // Index of the governance data source, increased each time the governance data source
+    // changes.
+    governance_data_source_index: u32 = 0,
     //   |                    |
     // --+-- WORMHOLE STATE --+--
     //   |                    |
