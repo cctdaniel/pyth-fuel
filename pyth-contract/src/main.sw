@@ -87,9 +87,6 @@ storage {
     // with a lower or equal sequence number will be discarded. This prevents double-execution,
     // and also makes sure that messages are executed in the right order.
     last_executed_governance_sequence: u64 = 0,
-    // Index of the governance data source, increased each time the governance data source
-    // changes.
-    governance_data_source_index: u32 = 0,
     //   |                    |
     // --+-- WORMHOLE STATE --+--
     //   |                    |
@@ -508,46 +505,6 @@ impl PythInfo for Contract {
     fn is_valid_data_source(data_source: DataSource) -> bool {
         data_source.is_valid_data_source(storage.is_valid_data_source)
     }
-
-    // 
-    #[storage(read)]
-    fn is_valid_governance_data_source(data_source: DataSource) -> bool {
-        data_source.is_valid_governance_data_source(
-            storage
-                .governance_data_source
-                .read()
-                .chain_id,
-            storage
-                .governance_data_source
-                .read()
-                .emitter_address,
-        )
-    }
-
-    #[storage(read)]
-    fn last_executed_governance_sequence() -> u64 {
-        storage.last_executed_governance_sequence.read()
-    }
-
-    #[storage(read)]
-    fn governance_data_source_index() -> u32 {
-        storage.governance_data_source_index.read()
-    }
-
-    #[storage(write)]
-    fn set_governance_data_source(new_data_source: DataSource) {
-        storage.governance_data_source.write(new_data_source);
-    }
-
-    #[storage(write)]
-    fn set_last_executed_governance_sequence(sequence: u64) {
-        storage.last_executed_governance_sequence.write(sequence);
-    }
-
-    #[storage(write)]
-    fn set_governance_data_source_index(new_index: u32) {
-        storage.governance_data_source_index.write(new_index);
-    }
 }
 
 /// PythInfo Private Functions ///
@@ -669,14 +626,13 @@ fn submit_new_guardian_set(encoded_vm: Bytes) {
     })
 }
 
-
 abi PythGovernance {
-    #[storage(read)]
+    #[storage(read, write)]
     fn verify_governance_vm(encoded_vm: Bytes) -> WormholeVM;
 }
 
 impl PythGovernance for Contract {
-    #[storage(read)]
+    #[storage(read, write)]
     fn verify_governance_vm(encoded_vm: Bytes) -> WormholeVM {
         let vm = WormholeVM::parse_and_verify_wormhole_vm(
             current_guardian_set_index(),
@@ -685,22 +641,22 @@ impl PythGovernance for Contract {
                 .wormhole_guardian_sets,
         );
 
-        // let data_source = DataSource {
-        //     chain_id: vm.emitter_chain_id,
-        //     emitter_address: vm.emitter_address,
-        // };
-        // require(
-        //     storage
-        //         .is_valid_governance_data_source(data_source),
-        //     PythError::InvalidGovernanceDataSource,
-        // );
+        require(
+            storage
+                .governance_data_source
+                .read()
+                .is_valid_governance_data_source(vm.emitter_chain_id, vm.emitter_address),
+            PythError::InvalidGovernanceDataSource,
+        );
 
-        // require(vm.sequence > last_executed_governance_sequence(),
-        //     PythError::OldGovernanceMessage,
-        // );
+        require(
+            vm.sequence > storage
+                .last_executed_governance_sequence
+                .read(),
+            PythError::OldGovernanceMessage,
+        );
 
-        // set_last_executed_governance_sequence(vm.sequence);
-
+        storage.last_executed_governance_sequence.write(vm.sequence);
         vm
     }
 }

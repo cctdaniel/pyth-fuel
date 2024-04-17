@@ -288,24 +288,6 @@ abi PythInfo {
 
     #[storage(read)]
     fn valid_data_sources() -> Vec<DataSource>;
-
-    #[storage(read)]
-    fn is_valid_governance_data_source(data_source: DataSource) -> bool;
-
-    #[storage(read)]
-    fn last_executed_governance_sequence() -> u64;
-
-    #[storage(read)]
-    fn governance_data_source_index() -> u32;
-
-    #[storage(write)]
-    fn set_governance_data_source(new_data_source: DataSource);
-
-    #[storage(write)]
-    fn set_last_executed_governance_sequence(sequence: u64);
-
-    #[storage(write)]
-    fn set_governance_data_source_index(new_index: u32);
 }
 
 abi WormholeGuardians {

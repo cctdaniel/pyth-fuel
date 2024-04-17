@@ -1007,15 +1007,15 @@
       },
       "attributes": [
         {
+          "name": "payable",
+          "arguments": []
+        },
+        {
           "name": "storage",
           "arguments": [
             "read",
             "write"
           ]
-        },
-        {
-          "name": "payable",
-          "arguments": []
         }
       ]
     },
@@ -1138,23 +1138,6 @@
       ]
     },
     {
-      "inputs": [],
-      "name": "governance_data_source_index",
-      "output": {
-        "name": "",
-        "type": 28,
-        "typeArguments": null
-      },
-      "attributes": [
-        {
-          "name": "storage",
-          "arguments": [
-            "read"
-          ]
-        }
-      ]
-    },
-    {
       "inputs": [
         {
           "name": "data_source",
@@ -1166,46 +1149,6 @@
       "output": {
         "name": "",
         "type": 2,
-        "typeArguments": null
-      },
-      "attributes": [
-        {
-          "name": "storage",
-          "arguments": [
-            "read"
-          ]
-        }
-      ]
-    },
-    {
-      "inputs": [
-        {
-          "name": "data_source",
-          "type": 15,
-          "typeArguments": null
-        }
-      ],
-      "name": "is_valid_governance_data_source",
-      "output": {
-        "name": "",
-        "type": 2,
-        "typeArguments": null
-      },
-      "attributes": [
-        {
-          "name": "storage",
-          "arguments": [
-            "read"
-          ]
-        }
-      ]
-    },
-    {
-      "inputs": [],
-      "name": "last_executed_governance_sequence",
-      "output": {
-        "name": "",
-        "type": 29,
         "typeArguments": null
       },
       "attributes": [
@@ -1282,75 +1225,6 @@
           "name": "storage",
           "arguments": [
             "read"
-          ]
-        }
-      ]
-    },
-    {
-      "inputs": [
-        {
-          "name": "new_data_source",
-          "type": 15,
-          "typeArguments": null
-        }
-      ],
-      "name": "set_governance_data_source",
-      "output": {
-        "name": "",
-        "type": 0,
-        "typeArguments": null
-      },
-      "attributes": [
-        {
-          "name": "storage",
-          "arguments": [
-            "write"
-          ]
-        }
-      ]
-    },
-    {
-      "inputs": [
-        {
-          "name": "new_index",
-          "type": 28,
-          "typeArguments": null
-        }
-      ],
-      "name": "set_governance_data_source_index",
-      "output": {
-        "name": "",
-        "type": 0,
-        "typeArguments": null
-      },
-      "attributes": [
-        {
-          "name": "storage",
-          "arguments": [
-            "write"
-          ]
-        }
-      ]
-    },
-    {
-      "inputs": [
-        {
-          "name": "sequence",
-          "type": 29,
-          "typeArguments": null
-        }
-      ],
-      "name": "set_last_executed_governance_sequence",
-      "output": {
-        "name": "",
-        "type": 0,
-        "typeArguments": null
-      },
-      "attributes": [
-        {
-          "name": "storage",
-          "arguments": [
-            "write"
           ]
         }
       ]
@@ -1517,7 +1391,8 @@
         {
           "name": "storage",
           "arguments": [
-            "read"
+            "read",
+            "write"
           ]
         }
       ]
@@ -3291,6 +3166,22 @@
         "type": 8,
         "typeArguments": []
       }
+    },
+    {
+      "logId": 221,
+      "loggedType": {
+        "name": "",
+        "type": 6,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 222,
+      "loggedType": {
+        "name": "",
+        "type": 6,
+        "typeArguments": []
+      }
     }
   ],
   "messagesTypes": [],
@@ -3302,7 +3193,7 @@
         "type": 4,
         "typeArguments": []
       },
-      "offset": 277656
+      "offset": 276312
     }
   ]
 }
