@@ -104,6 +104,11 @@
           "typeArguments": null
         },
         {
+          "name": "InvalidGovernanceDataSource",
+          "type": 0,
+          "typeArguments": null
+        },
+        {
           "name": "InvalidHeaderSize",
           "type": 0,
           "typeArguments": null
@@ -175,6 +180,11 @@
         },
         {
           "name": "NumberOfUpdatesIrretrievable",
+          "type": 0,
+          "typeArguments": null
+        },
+        {
+          "name": "OldGovernanceMessage",
           "type": 0,
           "typeArguments": null
         },
@@ -2968,7 +2978,7 @@
         "type": 4,
         "typeArguments": []
       },
-      "offset": 260776
+      "offset": 260792
     }
   ]
 }

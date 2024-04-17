@@ -9,6 +9,7 @@ pub enum PythError {
     InvalidAttestationSize: (),
     InvalidDataSourcesLength: (),
     InvalidExponent: (),
+    InvalidGovernanceDataSource: (),
     InvalidHeaderSize: (),
     InvalidMagic: (),
     InvalidMajorVersion: (),
@@ -24,6 +25,7 @@ pub enum PythError {
     LengthOfPriceFeedIdsAndPublishTimesMustMatch: (),
     NewGuardianSetIsEmpty: (),
     NumberOfUpdatesIrretrievable: (),
+    OldGovernanceMessage: (),
     /// Emitted when a Price's `publish_time` is stale.
     OutdatedPrice: (),
     /// Emitted when a PriceFeed could not be retrieved.
