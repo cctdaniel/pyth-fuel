@@ -29,7 +29,7 @@ mod success {
 
         // Initial values
         assert!(
-            !valid_data_source(&deployer.instance, &default_data_sources()[0])
+            !is_valid_data_source(&deployer.instance, &default_data_sources()[0])
                 .await
                 .value
         );
@@ -79,7 +79,7 @@ mod success {
 
         // Final values
         assert!(
-            valid_data_source(&deployer.instance, &default_data_sources()[0])
+            is_valid_data_source(&deployer.instance, &default_data_sources()[0])
                 .await
                 .value
         );

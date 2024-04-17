@@ -505,8 +505,48 @@ impl PythInfo for Contract {
     }
 
     #[storage(read)]
-    fn valid_data_source(data_source: DataSource) -> bool {
+    fn is_valid_data_source(data_source: DataSource) -> bool {
         data_source.is_valid_data_source(storage.is_valid_data_source)
+    }
+
+    // 
+    #[storage(read)]
+    fn is_valid_governance_data_source(data_source: DataSource) -> bool {
+        data_source.is_valid_governance_data_source(
+            storage
+                .governance_data_source
+                .read()
+                .chain_id,
+            storage
+                .governance_data_source
+                .read()
+                .emitter_address,
+        )
+    }
+
+    #[storage(read)]
+    fn last_executed_governance_sequence() -> u64 {
+        storage.last_executed_governance_sequence.read()
+    }
+
+    #[storage(read)]
+    fn governance_data_source_index() -> u32 {
+        storage.governance_data_source_index.read()
+    }
+
+    #[storage(write)]
+    fn set_governance_data_source(new_data_source: DataSource) {
+        storage.governance_data_source.write(new_data_source);
+    }
+
+    #[storage(write)]
+    fn set_last_executed_governance_sequence(sequence: u64) {
+        storage.last_executed_governance_sequence.write(sequence);
+    }
+
+    #[storage(write)]
+    fn set_governance_data_source_index(new_index: u32) {
+        storage.governance_data_source_index.write(new_index);
     }
 }
 

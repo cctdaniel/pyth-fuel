@@ -1007,15 +1007,15 @@
       },
       "attributes": [
         {
-          "name": "payable",
-          "arguments": []
-        },
-        {
           "name": "storage",
           "arguments": [
             "read",
             "write"
           ]
+        },
+        {
+          "name": "payable",
+          "arguments": []
         }
       ]
     },
@@ -1063,15 +1063,15 @@
       },
       "attributes": [
         {
-          "name": "payable",
-          "arguments": []
-        },
-        {
           "name": "storage",
           "arguments": [
             "read",
             "write"
           ]
+        },
+        {
+          "name": "payable",
+          "arguments": []
         }
       ]
     },
@@ -1133,6 +1133,86 @@
           "arguments": [
             "read",
             "write"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [],
+      "name": "governance_data_source_index",
+      "output": {
+        "name": "",
+        "type": 28,
+        "typeArguments": null
+      },
+      "attributes": [
+        {
+          "name": "storage",
+          "arguments": [
+            "read"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "data_source",
+          "type": 15,
+          "typeArguments": null
+        }
+      ],
+      "name": "is_valid_data_source",
+      "output": {
+        "name": "",
+        "type": 2,
+        "typeArguments": null
+      },
+      "attributes": [
+        {
+          "name": "storage",
+          "arguments": [
+            "read"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "data_source",
+          "type": 15,
+          "typeArguments": null
+        }
+      ],
+      "name": "is_valid_governance_data_source",
+      "output": {
+        "name": "",
+        "type": 2,
+        "typeArguments": null
+      },
+      "attributes": [
+        {
+          "name": "storage",
+          "arguments": [
+            "read"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [],
+      "name": "last_executed_governance_sequence",
+      "output": {
+        "name": "",
+        "type": 29,
+        "typeArguments": null
+      },
+      "attributes": [
+        {
+          "name": "storage",
+          "arguments": [
+            "read"
           ]
         }
       ]
@@ -1207,18 +1287,24 @@
       ]
     },
     {
-      "inputs": [],
-      "name": "single_update_fee",
+      "inputs": [
+        {
+          "name": "new_data_source",
+          "type": 15,
+          "typeArguments": null
+        }
+      ],
+      "name": "set_governance_data_source",
       "output": {
         "name": "",
-        "type": 29,
+        "type": 0,
         "typeArguments": null
       },
       "attributes": [
         {
           "name": "storage",
           "arguments": [
-            "read"
+            "write"
           ]
         }
       ]
@@ -1226,15 +1312,55 @@
     {
       "inputs": [
         {
-          "name": "data_source",
-          "type": 15,
+          "name": "new_index",
+          "type": 28,
           "typeArguments": null
         }
       ],
-      "name": "valid_data_source",
+      "name": "set_governance_data_source_index",
       "output": {
         "name": "",
-        "type": 2,
+        "type": 0,
+        "typeArguments": null
+      },
+      "attributes": [
+        {
+          "name": "storage",
+          "arguments": [
+            "write"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "sequence",
+          "type": 29,
+          "typeArguments": null
+        }
+      ],
+      "name": "set_last_executed_governance_sequence",
+      "output": {
+        "name": "",
+        "type": 0,
+        "typeArguments": null
+      },
+      "attributes": [
+        {
+          "name": "storage",
+          "arguments": [
+            "write"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [],
+      "name": "single_update_fee",
+      "output": {
+        "name": "",
+        "type": 29,
         "typeArguments": null
       },
       "attributes": [
@@ -3176,7 +3302,7 @@
         "type": 4,
         "typeArguments": []
       },
-      "offset": 274456
+      "offset": 277656
     }
   ]
 }
