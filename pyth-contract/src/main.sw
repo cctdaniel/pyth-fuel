@@ -629,34 +629,47 @@ fn submit_new_guardian_set(encoded_vm: Bytes) {
 abi PythGovernance {
     #[storage(read, write)]
     fn verify_governance_vm(encoded_vm: Bytes) -> WormholeVM;
+
+    #[storage(read, write)]
+    fn execute_governance_instruction(encoded_vm: Bytes);
 }
 
 impl PythGovernance for Contract {
     #[storage(read, write)]
     fn verify_governance_vm(encoded_vm: Bytes) -> WormholeVM {
-        let vm = WormholeVM::parse_and_verify_wormhole_vm(
-            current_guardian_set_index(),
-            encoded_vm,
-            storage
-                .wormhole_guardian_sets,
-        );
-
-        require(
-            storage
-                .governance_data_source
-                .read()
-                .is_valid_governance_data_source(vm.emitter_chain_id, vm.emitter_address),
-            PythError::InvalidGovernanceDataSource,
-        );
-
-        require(
-            vm.sequence > storage
-                .last_executed_governance_sequence
-                .read(),
-            PythError::OldGovernanceMessage,
-        );
-
-        storage.last_executed_governance_sequence.write(vm.sequence);
-        vm
+        verify_governance_vm(encoded_vm)
     }
+
+    #[storage(read, write)]
+    fn execute_governance_instruction(encoded_vm: Bytes) {
+        let vm = verify_governance_vm(encoded_vm);
+    }
+}
+
+#[storage(read, write)]
+fn verify_governance_vm(encoded_vm: Bytes) -> WormholeVM {
+    let vm = WormholeVM::parse_and_verify_wormhole_vm(
+        current_guardian_set_index(),
+        encoded_vm,
+        storage
+            .wormhole_guardian_sets,
+    );
+
+    require(
+        storage
+            .governance_data_source
+            .read()
+            .is_valid_governance_data_source(vm.emitter_chain_id, vm.emitter_address),
+        PythError::InvalidGovernanceDataSource,
+    );
+
+    require(
+        vm.sequence > storage
+            .last_executed_governance_sequence
+            .read(),
+        PythError::OldGovernanceMessage,
+    );
+
+    storage.last_executed_governance_sequence.write(vm.sequence);
+    vm
 }
