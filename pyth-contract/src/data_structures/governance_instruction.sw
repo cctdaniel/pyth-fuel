@@ -101,15 +101,3 @@ impl GovernanceInstruction {
         )
     }
 }
-
-pub fn parse_governance_instruction(encoded_payload: Bytes) {
-    let mut index = 0;
-    let magic = u32::from_be_bytes([
-        encoded_payload.get(index).unwrap(),
-        encoded_payload.get(index + 1).unwrap(),
-        encoded_payload.get(index + 2).unwrap(),
-        encoded_payload.get(index + 3).unwrap(),
-    ]);
-    require(magic == MAGIC, PythError::InvalidMagic);
-    index += 4;
-}
