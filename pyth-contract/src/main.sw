@@ -31,6 +31,7 @@ use ::data_structures::{
     price::*,
     update_type::UpdateType,
     wormhole_light::*,
+    governance_instruction::GovernanceInstruction,
 };
 use ::events::{ConstructedEvent, NewGuardianSetEvent, UpdatedPriceFeedsEvent};
 
@@ -643,6 +644,7 @@ impl PythGovernance for Contract {
     #[storage(read, write)]
     fn execute_governance_instruction(encoded_vm: Bytes) {
         let vm = verify_governance_vm(encoded_vm);
+        let gi = GovernanceInstruction::parse_governance_instruction(vm.payload);
     }
 }
 

@@ -109,6 +109,16 @@
           "typeArguments": null
         },
         {
+          "name": "InvalidGovernanceAction",
+          "type": 0,
+          "typeArguments": null
+        },
+        {
+          "name": "InvalidGovernanceModule",
+          "type": 0,
+          "typeArguments": null
+        },
+        {
           "name": "InvalidGovernanceTarget",
           "type": 0,
           "typeArguments": null
@@ -876,14 +886,14 @@
       },
       "attributes": [
         {
-          "name": "payable",
-          "arguments": []
-        },
-        {
           "name": "storage",
           "arguments": [
             "read"
           ]
+        },
+        {
+          "name": "payable",
+          "arguments": []
         }
       ]
     },
@@ -3216,7 +3226,7 @@
       "logId": 223,
       "loggedType": {
         "name": "",
-        "type": 8,
+        "type": 6,
         "typeArguments": []
       }
     },
@@ -3224,7 +3234,7 @@
       "logId": 224,
       "loggedType": {
         "name": "",
-        "type": 8,
+        "type": 6,
         "typeArguments": []
       }
     },
@@ -3232,7 +3242,7 @@
       "logId": 225,
       "loggedType": {
         "name": "",
-        "type": 8,
+        "type": 6,
         "typeArguments": []
       }
     },
@@ -3328,12 +3338,36 @@
       "logId": 237,
       "loggedType": {
         "name": "",
-        "type": 6,
+        "type": 8,
         "typeArguments": []
       }
     },
     {
       "logId": 238,
+      "loggedType": {
+        "name": "",
+        "type": 8,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 239,
+      "loggedType": {
+        "name": "",
+        "type": 8,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 240,
+      "loggedType": {
+        "name": "",
+        "type": 6,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 241,
       "loggedType": {
         "name": "",
         "type": 6,
@@ -3350,7 +3384,7 @@
         "type": 4,
         "typeArguments": []
       },
-      "offset": 291792
+      "offset": 293848
     }
   ]
 }
