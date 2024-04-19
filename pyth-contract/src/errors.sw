@@ -10,6 +10,7 @@ pub enum PythError {
     InvalidDataSourcesLength: (),
     InvalidExponent: (),
     InvalidGovernanceDataSource: (),
+    InvalidGovernanceTarget: (),
     InvalidHeaderSize: (),
     InvalidMagic: (),
     InvalidMajorVersion: (),

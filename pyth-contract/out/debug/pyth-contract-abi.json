@@ -109,6 +109,11 @@
           "typeArguments": null
         },
         {
+          "name": "InvalidGovernanceTarget",
+          "type": 0,
+          "typeArguments": null
+        },
+        {
           "name": "InvalidHeaderSize",
           "type": 0,
           "typeArguments": null
@@ -1007,15 +1012,15 @@
       },
       "attributes": [
         {
-          "name": "payable",
-          "arguments": []
-        },
-        {
           "name": "storage",
           "arguments": [
             "read",
             "write"
           ]
+        },
+        {
+          "name": "payable",
+          "arguments": []
         }
       ]
     },
@@ -1063,15 +1068,15 @@
       },
       "attributes": [
         {
+          "name": "payable",
+          "arguments": []
+        },
+        {
           "name": "storage",
           "arguments": [
             "read",
             "write"
           ]
-        },
-        {
-          "name": "payable",
-          "arguments": []
         }
       ]
     },
@@ -3345,7 +3350,7 @@
         "type": 4,
         "typeArguments": []
       },
-      "offset": 291800
+      "offset": 291792
     }
   ]
 }
