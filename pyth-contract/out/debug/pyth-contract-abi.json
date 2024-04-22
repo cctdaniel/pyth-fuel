@@ -425,12 +425,12 @@
       "components": [
         {
           "name": "buf",
-          "type": 23,
+          "type": 24,
           "typeArguments": null
         },
         {
           "name": "len",
-          "type": 30,
+          "type": 31,
           "typeArguments": null
         }
       ],
@@ -442,7 +442,7 @@
       "components": [
         {
           "name": "guardian_set_index",
-          "type": 29,
+          "type": 30,
           "typeArguments": null
         }
       ],
@@ -483,7 +483,7 @@
       "components": [
         {
           "name": "chain_id",
-          "type": 28,
+          "type": 29,
           "typeArguments": null
         },
         {
@@ -496,16 +496,38 @@
     },
     {
       "typeId": 17,
+      "type": "struct GovernanceDataSourceSetEvent",
+      "components": [
+        {
+          "name": "old_data_source",
+          "type": 16,
+          "typeArguments": null
+        },
+        {
+          "name": "new_data_source",
+          "type": 16,
+          "typeArguments": null
+        },
+        {
+          "name": "initial_sequence",
+          "type": 31,
+          "typeArguments": null
+        }
+      ],
+      "typeParameters": null
+    },
+    {
+      "typeId": 18,
       "type": "struct GuardianSet",
       "components": [
         {
           "name": "expiration_time",
-          "type": 30,
+          "type": 31,
           "typeArguments": null
         },
         {
           "name": "keys",
-          "type": 25,
+          "type": 26,
           "typeArguments": [
             {
               "name": "",
@@ -518,7 +540,7 @@
       "typeParameters": null
     },
     {
-      "typeId": 18,
+      "typeId": 19,
       "type": "struct NewGuardianSetEvent",
       "components": [
         {
@@ -528,14 +550,14 @@
         },
         {
           "name": "new_guardian_set_index",
-          "type": 29,
+          "type": 30,
           "typeArguments": null
         }
       ],
       "typeParameters": null
     },
     {
-      "typeId": 19,
+      "typeId": 20,
       "type": "struct OwnershipRenounced",
       "components": [
         {
@@ -547,7 +569,7 @@
       "typeParameters": null
     },
     {
-      "typeId": 20,
+      "typeId": 21,
       "type": "struct OwnershipSet",
       "components": [
         {
@@ -559,39 +581,39 @@
       "typeParameters": null
     },
     {
-      "typeId": 21,
+      "typeId": 22,
       "type": "struct Price",
       "components": [
         {
           "name": "confidence",
-          "type": 30,
+          "type": 31,
           "typeArguments": null
         },
         {
           "name": "exponent",
-          "type": 29,
+          "type": 30,
           "typeArguments": null
         },
         {
           "name": "price",
-          "type": 30,
+          "type": 31,
           "typeArguments": null
         },
         {
           "name": "publish_time",
-          "type": 30,
+          "type": 31,
           "typeArguments": null
         }
       ],
       "typeParameters": null
     },
     {
-      "typeId": 22,
+      "typeId": 23,
       "type": "struct PriceFeed",
       "components": [
         {
           "name": "ema_price",
-          "type": 21,
+          "type": 22,
           "typeArguments": null
         },
         {
@@ -601,14 +623,14 @@
         },
         {
           "name": "price",
-          "type": 21,
+          "type": 22,
           "typeArguments": null
         }
       ],
       "typeParameters": null
     },
     {
-      "typeId": 23,
+      "typeId": 24,
       "type": "struct RawBytes",
       "components": [
         {
@@ -618,14 +640,14 @@
         },
         {
           "name": "cap",
-          "type": 30,
+          "type": 31,
           "typeArguments": null
         }
       ],
       "typeParameters": null
     },
     {
-      "typeId": 24,
+      "typeId": 25,
       "type": "struct RawVec",
       "components": [
         {
@@ -635,7 +657,7 @@
         },
         {
           "name": "cap",
-          "type": 30,
+          "type": 31,
           "typeArguments": null
         }
       ],
@@ -644,12 +666,12 @@
       ]
     },
     {
-      "typeId": 25,
+      "typeId": 26,
       "type": "struct Vec",
       "components": [
         {
           "name": "buf",
-          "type": 24,
+          "type": 25,
           "typeArguments": [
             {
               "name": "",
@@ -660,7 +682,7 @@
         },
         {
           "name": "len",
-          "type": 30,
+          "type": 31,
           "typeArguments": null
         }
       ],
@@ -669,12 +691,12 @@
       ]
     },
     {
-      "typeId": 26,
+      "typeId": 27,
       "type": "struct WormholeProvider",
       "components": [
         {
           "name": "governance_chain_id",
-          "type": 28,
+          "type": 29,
           "typeArguments": null
         },
         {
@@ -686,17 +708,17 @@
       "typeParameters": null
     },
     {
-      "typeId": 27,
+      "typeId": 28,
       "type": "struct WormholeVM",
       "components": [
         {
           "name": "version",
-          "type": 31,
+          "type": 32,
           "typeArguments": null
         },
         {
           "name": "guardian_set_index",
-          "type": 29,
+          "type": 30,
           "typeArguments": null
         },
         {
@@ -706,17 +728,17 @@
         },
         {
           "name": "timestamp",
-          "type": 29,
+          "type": 30,
           "typeArguments": null
         },
         {
           "name": "nonce",
-          "type": 29,
+          "type": 30,
           "typeArguments": null
         },
         {
           "name": "emitter_chain_id",
-          "type": 28,
+          "type": 29,
           "typeArguments": null
         },
         {
@@ -726,12 +748,12 @@
         },
         {
           "name": "sequence",
-          "type": 30,
+          "type": 31,
           "typeArguments": null
         },
         {
           "name": "consistency_level",
-          "type": 31,
+          "type": 32,
           "typeArguments": null
         },
         {
@@ -743,25 +765,25 @@
       "typeParameters": null
     },
     {
-      "typeId": 28,
+      "typeId": 29,
       "type": "u16",
       "components": null,
       "typeParameters": null
     },
     {
-      "typeId": 29,
+      "typeId": 30,
       "type": "u32",
       "components": null,
       "typeParameters": null
     },
     {
-      "typeId": 30,
+      "typeId": 31,
       "type": "u64",
       "components": null,
       "typeParameters": null
     },
     {
-      "typeId": 31,
+      "typeId": 32,
       "type": "u8",
       "components": null,
       "typeParameters": null
@@ -796,7 +818,7 @@
       "name": "ema_price",
       "output": {
         "name": "",
-        "type": 21,
+        "type": 22,
         "typeArguments": null
       },
       "attributes": [
@@ -812,7 +834,7 @@
       "inputs": [
         {
           "name": "time_period",
-          "type": 30,
+          "type": 31,
           "typeArguments": null
         },
         {
@@ -824,7 +846,7 @@
       "name": "ema_price_no_older_than",
       "output": {
         "name": "",
-        "type": 21,
+        "type": 22,
         "typeArguments": null
       },
       "attributes": [
@@ -847,7 +869,7 @@
       "name": "ema_price_unsafe",
       "output": {
         "name": "",
-        "type": 21,
+        "type": 22,
         "typeArguments": null
       },
       "attributes": [
@@ -863,17 +885,17 @@
       "inputs": [
         {
           "name": "max_publish_time",
-          "type": 30,
+          "type": 31,
           "typeArguments": null
         },
         {
           "name": "min_publish_time",
-          "type": 30,
+          "type": 31,
           "typeArguments": null
         },
         {
           "name": "target_price_feed_ids",
-          "type": 25,
+          "type": 26,
           "typeArguments": [
             {
               "name": "",
@@ -884,7 +906,7 @@
         },
         {
           "name": "update_data",
-          "type": 25,
+          "type": 26,
           "typeArguments": [
             {
               "name": "",
@@ -897,25 +919,25 @@
       "name": "parse_price_feed_updates",
       "output": {
         "name": "",
-        "type": 25,
+        "type": 26,
         "typeArguments": [
           {
             "name": "",
-            "type": 22,
+            "type": 23,
             "typeArguments": null
           }
         ]
       },
       "attributes": [
         {
-          "name": "payable",
-          "arguments": []
-        },
-        {
           "name": "storage",
           "arguments": [
             "read"
           ]
+        },
+        {
+          "name": "payable",
+          "arguments": []
         }
       ]
     },
@@ -930,7 +952,7 @@
       "name": "price",
       "output": {
         "name": "",
-        "type": 21,
+        "type": 22,
         "typeArguments": null
       },
       "attributes": [
@@ -946,7 +968,7 @@
       "inputs": [
         {
           "name": "time_period",
-          "type": 30,
+          "type": 31,
           "typeArguments": null
         },
         {
@@ -958,7 +980,7 @@
       "name": "price_no_older_than",
       "output": {
         "name": "",
-        "type": 21,
+        "type": 22,
         "typeArguments": null
       },
       "attributes": [
@@ -981,7 +1003,7 @@
       "name": "price_unsafe",
       "output": {
         "name": "",
-        "type": 21,
+        "type": 22,
         "typeArguments": null
       },
       "attributes": [
@@ -997,7 +1019,7 @@
       "inputs": [
         {
           "name": "update_data",
-          "type": 25,
+          "type": 26,
           "typeArguments": [
             {
               "name": "",
@@ -1010,7 +1032,7 @@
       "name": "update_fee",
       "output": {
         "name": "",
-        "type": 30,
+        "type": 31,
         "typeArguments": null
       },
       "attributes": [
@@ -1026,7 +1048,7 @@
       "inputs": [
         {
           "name": "update_data",
-          "type": 25,
+          "type": 26,
           "typeArguments": [
             {
               "name": "",
@@ -1060,7 +1082,7 @@
       "inputs": [
         {
           "name": "price_feed_ids",
-          "type": 25,
+          "type": 26,
           "typeArguments": [
             {
               "name": "",
@@ -1071,18 +1093,18 @@
         },
         {
           "name": "publish_times",
-          "type": 25,
+          "type": 26,
           "typeArguments": [
             {
               "name": "",
-              "type": 30,
+              "type": 31,
               "typeArguments": null
             }
           ]
         },
         {
           "name": "update_data",
-          "type": 25,
+          "type": 26,
           "typeArguments": [
             {
               "name": "",
@@ -1100,15 +1122,15 @@
       },
       "attributes": [
         {
-          "name": "payable",
-          "arguments": []
-        },
-        {
           "name": "storage",
           "arguments": [
             "read",
             "write"
           ]
+        },
+        {
+          "name": "payable",
+          "arguments": []
         }
       ]
     },
@@ -1117,7 +1139,7 @@
       "name": "valid_time_period",
       "output": {
         "name": "",
-        "type": 30,
+        "type": 31,
         "typeArguments": null
       },
       "attributes": [
@@ -1133,7 +1155,7 @@
       "inputs": [
         {
           "name": "data_sources",
-          "type": 25,
+          "type": 26,
           "typeArguments": [
             {
               "name": "",
@@ -1144,12 +1166,12 @@
         },
         {
           "name": "single_update_fee",
-          "type": 30,
+          "type": 31,
           "typeArguments": null
         },
         {
           "name": "valid_time_period_seconds",
-          "type": 30,
+          "type": 31,
           "typeArguments": null
         },
         {
@@ -1208,7 +1230,7 @@
       "name": "latest_publish_time",
       "output": {
         "name": "",
-        "type": 30,
+        "type": 31,
         "typeArguments": null
       },
       "attributes": [
@@ -1254,7 +1276,7 @@
       "name": "price_feed_unsafe",
       "output": {
         "name": "",
-        "type": 22,
+        "type": 23,
         "typeArguments": null
       },
       "attributes": [
@@ -1271,7 +1293,7 @@
       "name": "single_update_fee",
       "output": {
         "name": "",
-        "type": 30,
+        "type": 31,
         "typeArguments": null
       },
       "attributes": [
@@ -1288,7 +1310,7 @@
       "name": "valid_data_sources",
       "output": {
         "name": "",
-        "type": 25,
+        "type": 26,
         "typeArguments": [
           {
             "name": "",
@@ -1311,7 +1333,7 @@
       "name": "current_guardian_set_index",
       "output": {
         "name": "",
-        "type": 29,
+        "type": 30,
         "typeArguments": null
       },
       "attributes": [
@@ -1328,7 +1350,7 @@
       "name": "current_wormhole_provider",
       "output": {
         "name": "",
-        "type": 26,
+        "type": 27,
         "typeArguments": null
       },
       "attributes": [
@@ -1367,14 +1389,14 @@
       "inputs": [
         {
           "name": "index",
-          "type": 29,
+          "type": 30,
           "typeArguments": null
         }
       ],
       "name": "guardian_set",
       "output": {
         "name": "",
-        "type": 17,
+        "type": 18,
         "typeArguments": null
       },
       "attributes": [
@@ -1445,7 +1467,7 @@
       "name": "verify_governance_vm",
       "output": {
         "name": "",
-        "type": 27,
+        "type": 28,
         "typeArguments": null
       },
       "attributes": [
@@ -2784,7 +2806,7 @@
       "logId": 165,
       "loggedType": {
         "name": "",
-        "type": 20,
+        "type": 21,
         "typeArguments": []
       }
     },
@@ -2896,7 +2918,7 @@
       "logId": 179,
       "loggedType": {
         "name": "",
-        "type": 19,
+        "type": 20,
         "typeArguments": []
       }
     },
@@ -3112,7 +3134,7 @@
       "logId": 206,
       "loggedType": {
         "name": "",
-        "type": 18,
+        "type": 19,
         "typeArguments": []
       }
     },
@@ -3312,7 +3334,7 @@
       "logId": 231,
       "loggedType": {
         "name": "",
-        "type": 6,
+        "type": 8,
         "typeArguments": []
       }
     },
@@ -3320,7 +3342,7 @@
       "logId": 232,
       "loggedType": {
         "name": "",
-        "type": 6,
+        "type": 8,
         "typeArguments": []
       }
     },
@@ -3328,7 +3350,7 @@
       "logId": 233,
       "loggedType": {
         "name": "",
-        "type": 6,
+        "type": 8,
         "typeArguments": []
       }
     },
@@ -3424,7 +3446,7 @@
       "logId": 245,
       "loggedType": {
         "name": "",
-        "type": 8,
+        "type": 6,
         "typeArguments": []
       }
     },
@@ -3432,7 +3454,7 @@
       "logId": 246,
       "loggedType": {
         "name": "",
-        "type": 8,
+        "type": 6,
         "typeArguments": []
       }
     },
@@ -3440,7 +3462,7 @@
       "logId": 247,
       "loggedType": {
         "name": "",
-        "type": 8,
+        "type": 6,
         "typeArguments": []
       }
     },
@@ -3459,6 +3481,182 @@
         "type": 6,
         "typeArguments": []
       }
+    },
+    {
+      "logId": 250,
+      "loggedType": {
+        "name": "",
+        "type": 6,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 251,
+      "loggedType": {
+        "name": "",
+        "type": 6,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 252,
+      "loggedType": {
+        "name": "",
+        "type": 17,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 253,
+      "loggedType": {
+        "name": "",
+        "type": 6,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 254,
+      "loggedType": {
+        "name": "",
+        "type": 6,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 255,
+      "loggedType": {
+        "name": "",
+        "type": 6,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 256,
+      "loggedType": {
+        "name": "",
+        "type": 8,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 257,
+      "loggedType": {
+        "name": "",
+        "type": 8,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 258,
+      "loggedType": {
+        "name": "",
+        "type": 8,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 259,
+      "loggedType": {
+        "name": "",
+        "type": 8,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 260,
+      "loggedType": {
+        "name": "",
+        "type": 8,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 261,
+      "loggedType": {
+        "name": "",
+        "type": 8,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 262,
+      "loggedType": {
+        "name": "",
+        "type": 8,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 263,
+      "loggedType": {
+        "name": "",
+        "type": 8,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 264,
+      "loggedType": {
+        "name": "",
+        "type": 8,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 265,
+      "loggedType": {
+        "name": "",
+        "type": 8,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 266,
+      "loggedType": {
+        "name": "",
+        "type": 8,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 267,
+      "loggedType": {
+        "name": "",
+        "type": 8,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 268,
+      "loggedType": {
+        "name": "",
+        "type": 8,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 269,
+      "loggedType": {
+        "name": "",
+        "type": 8,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 270,
+      "loggedType": {
+        "name": "",
+        "type": 6,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 271,
+      "loggedType": {
+        "name": "",
+        "type": 6,
+        "typeArguments": []
+      }
     }
   ],
   "messagesTypes": [],
@@ -3470,7 +3668,7 @@
         "type": 4,
         "typeArguments": []
       },
-      "offset": 296404
+      "offset": 316836
     }
   ]
 }

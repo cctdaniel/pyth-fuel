@@ -2,7 +2,7 @@ library;
 
 use ::errors::PythError;
 use ::data_structures::{data_source::*, price::*, wormhole_light::{StorageGuardianSet, WormholeVM}};
-use pyth_interface::data_structures::{data_source::DataSource, price::{PriceFeed, PriceFeedId}, upgrade_contract_payload::UpgradeContractPayload};
+use pyth_interface::data_structures::{data_source::DataSource, price::{PriceFeed, PriceFeedId}, governance_payload::{UpgradeContractPayload, AuthorizeGovernanceDataSourceTransferPayload, RequestGovernanceDataSourceTransferPayload}};
 use std::{bytes::Bytes, hash::Hash};
 
 pub struct GovernanceInstruction {
@@ -104,6 +104,7 @@ impl GovernanceInstruction {
         )
     }
 
+    /// Parse a UpgradeContractPayload (action 1) with minimal validation
     pub fn parse_upgrade_contract_payload(encoded_payload: Bytes) -> UpgradeContractPayload {
         let mut index = 0;
         let b256_encoded_payload: b256 = encoded_payload.into();
@@ -113,5 +114,28 @@ impl GovernanceInstruction {
         index += 20;
         require(index == encoded_payload.len(), PythError::InvalidGovernanceMessage);
         uc
+    }
+
+    /// Parse a AuthorizeGovernanceDataSourceTransferPayload (action 2) with minimal validation
+    pub fn parse_authorize_governance_data_source_transfer_payload(encoded_payload: Bytes) -> AuthorizeGovernanceDataSourceTransferPayload {
+        AuthorizeGovernanceDataSourceTransferPayload {
+            claim_vaa: encoded_payload,
+        }
+    }
+
+    pub fn parse_request_governance_data_source_transfer_payload(encoded_payload: Bytes) -> RequestGovernanceDataSourceTransferPayload {
+        let mut index = 0;
+        let governance_data_source_index = u32::from_be_bytes([
+            encoded_payload.get(index).unwrap(),
+            encoded_payload.get(index + 1).unwrap(),
+            encoded_payload.get(index + 2).unwrap(),
+            encoded_payload.get(index + 3).unwrap(),
+        ]);
+        let rdgst = RequestGovernanceDataSourceTransferPayload {
+            governance_data_source_index,
+        };
+        index += 4;
+        require(index == encoded_payload.len(), PythError::InvalidGovernanceMessage);
+        rdgst
     }
 }

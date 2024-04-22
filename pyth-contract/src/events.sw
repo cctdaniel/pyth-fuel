@@ -24,3 +24,9 @@ pub struct ContractUpgradedEvent {
     old_implementation: Identity,
     new_implementation: Identity,
 }
+
+pub struct GovernanceDataSourceSetEvent {
+    old_data_source: DataSource,
+    new_data_source: DataSource,
+    initial_sequence: u64,
+}
