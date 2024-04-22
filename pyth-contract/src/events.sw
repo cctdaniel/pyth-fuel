@@ -19,3 +19,8 @@ pub struct NewGuardianSetEvent {
 pub struct UpdatedPriceFeedsEvent {
     updated_price_feeds: Vec<PriceFeedId>,
 }
+
+pub struct ContractUpgradedEvent {
+    old_implementation: Identity,
+    new_implementation: Identity,
+}

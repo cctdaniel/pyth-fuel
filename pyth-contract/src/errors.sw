@@ -11,6 +11,7 @@ pub enum PythError {
     InvalidExponent: (),
     InvalidGovernanceDataSource: (),
     InvalidGovernanceAction: (),
+    InvalidGovernanceMessage: (),
     InvalidGovernanceModule: (),
     InvalidGovernanceTarget: (),
     InvalidHeaderSize: (),

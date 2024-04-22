@@ -2,7 +2,7 @@ library;
 
 use ::errors::PythError;
 use ::data_structures::{data_source::*, price::*, wormhole_light::{StorageGuardianSet, WormholeVM}};
-use pyth_interface::data_structures::{data_source::DataSource, price::{PriceFeed, PriceFeedId}};
+use pyth_interface::data_structures::{data_source::DataSource, price::{PriceFeed, PriceFeedId}, upgrade_contract_payload::UpgradeContractPayload};
 use std::{bytes::Bytes, hash::Hash};
 
 pub struct GovernanceInstruction {
@@ -21,7 +21,7 @@ enum GovernanceModule {
     Invalid: (),
 }
 
-enum GovernanceAction {
+pub enum GovernanceAction {
     UpgradeContract: (), // 0
     AuthorizeGovernanceDataSourceTransfer: (), // 1
     SetDataSources: (), // 2
@@ -32,10 +32,7 @@ enum GovernanceAction {
     Invalid: (),
 }
 
-
 const MAGIC: u32 = 0x5054474d;
-
-const MODULE: GovernanceModule = GovernanceModule::Target;
 
 impl GovernanceInstruction {
     pub fn new(magic: u32,
@@ -105,5 +102,16 @@ impl GovernanceInstruction {
             target_chain_id,
             payload,
         )
+    }
+
+    pub fn parse_upgrade_contract_payload(encoded_payload: Bytes) -> UpgradeContractPayload {
+        let mut index = 0;
+        let b256_encoded_payload: b256 = encoded_payload.into();
+        let uc = UpgradeContractPayload {
+            new_implementation: Identity::Address(Address::from(b256_encoded_payload)),
+        };
+        index += 20;
+        require(index == encoded_payload.len(), PythError::InvalidGovernanceMessage);
+        uc
     }
 }

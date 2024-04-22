@@ -9,6 +9,7 @@ use ::data_structures::{
         PriceFeed,
         PriceFeedId,
     },
+    upgrade_contract_payload::UpgradeContractPayload,
     wormhole_light::{
         GuardianSet,
         WormholeProvider,

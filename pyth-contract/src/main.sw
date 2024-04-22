@@ -21,6 +21,7 @@ use std::{
         storage_vec::*,
     },
     u256::U256,
+    revert::revert,
 };
 
 use ::errors::{PythError, WormholeError};
@@ -31,9 +32,9 @@ use ::data_structures::{
     price::*,
     update_type::UpdateType,
     wormhole_light::*,
-    governance_instruction::GovernanceInstruction,
+    governance_instruction::{GovernanceInstruction, GovernanceAction},
 };
-use ::events::{ConstructedEvent, NewGuardianSetEvent, UpdatedPriceFeedsEvent};
+use ::events::{ConstructedEvent, NewGuardianSetEvent, UpdatedPriceFeedsEvent, ContractUpgradedEvent};
 
 use pyth_interface::{
     data_structures::{
@@ -43,6 +44,7 @@ use pyth_interface::{
             PriceFeed,
             PriceFeedId,
         },
+        upgrade_contract_payload::UpgradeContractPayload,
         wormhole_light::{
             GuardianSet,
             WormholeProvider,
@@ -102,6 +104,10 @@ storage {
         governance_chain_id: 0u16,
         governance_contract: ZERO_B256,
     },
+    //   |                    |
+    // --+-- GOVERNANCE STATE --+--
+    //   |                    |
+    current_implementation: Identity = Identity::Address(Address::from(ZERO_B256)),
 }
 
 impl SRC5 for Contract {
@@ -420,6 +426,16 @@ fn valid_time_period() -> u64 {
     storage.valid_time_period_seconds.read()
 }
 
+#[storage(read)]
+fn chain_id() -> u16 {
+    storage.wormhole_provider.read().governance_chain_id
+}
+
+#[storage(read)]
+fn current_implementation() -> Identity {
+    storage.current_implementation.read()
+}
+
 impl PythInit for Contract {
     #[storage(read, write)]
     fn constructor(
@@ -627,6 +643,37 @@ fn submit_new_guardian_set(encoded_vm: Bytes) {
     })
 }
 
+/// Authorize upgrades.
+#[storage(write)]
+fn authorize_upgrade(new_implementation: Identity) {
+    storage.current_implementation.write(new_implementation);
+}
+
+/// Upgrades the contract to a new implementation.
+#[storage(read, write)]
+fn upgrade_upgradeable_contract(payload: UpgradeContractPayload) {
+    let old_implementation = current_implementation();
+    // Perform the upgrade
+    authorize_upgrade(payload.new_implementation);
+
+    require(
+        pyth_upgradeable_magic() == 0x97a6f304,
+        PythError::InvalidGovernanceMessage,
+    );
+    
+    log(ContractUpgradedEvent {
+        old_implementation,
+        new_implementation: current_implementation(),
+    });
+}
+
+/// Returns a magic number for the contract.
+#[storage(read)]
+fn pyth_upgradeable_magic() -> u32 {
+    0x97a6f304
+}
+
+
 abi PythGovernance {
     #[storage(read, write)]
     fn verify_governance_vm(encoded_vm: Bytes) -> WormholeVM;
@@ -645,8 +692,46 @@ impl PythGovernance for Contract {
     fn execute_governance_instruction(encoded_vm: Bytes) {
         let vm = verify_governance_vm(encoded_vm);
         let gi = GovernanceInstruction::parse_governance_instruction(vm.payload);
+
+        require(gi.target_chain_id == chain_id() || gi.target_chain_id == 0, PythError::InvalidGovernanceTarget);
+
+        match gi.action {
+            GovernanceAction::UpgradeContract => {
+                require(gi.target_chain_id != 0, PythError::InvalidGovernanceTarget);
+                let uc: UpgradeContractPayload = GovernanceInstruction::parse_upgrade_contract_payload(gi.payload);
+                upgrade_upgradeable_contract(uc);
+            },
+            GovernanceAction::AuthorizeGovernanceDataSourceTransfer => {
+                // authorize_governance_data_source_transfer(parse_authorize_governance_data_source_transfer_payload(gi.payload));
+            },
+            GovernanceAction::SetDataSources => {
+                // set_data_sources(parse_set_data_sources_payload(gi.payload));
+            },
+            GovernanceAction::SetFee => {
+                // set_fee(parse_set_fee_payload(gi.payload));
+            },
+            GovernanceAction::SetValidPeriod => {
+                // set_valid_period(parse_set_valid_period_payload(gi.payload));
+            },
+            GovernanceAction::RequestGovernanceDataSourceTransfer => {
+                // RequestGovernanceDataSourceTransfer can be only part of AuthorizeGovernanceDataSourceTransfer message
+                // The `revert` function only accepts u64, so as
+                // a workaround we use require.
+                require(false, PythError::InvalidGovernanceMessage);
+            },
+            GovernanceAction::SetWormholeAddress => {
+                require(gi.target_chain_id != 0, PythError::InvalidGovernanceTarget);
+                // set_wormhole_address(parse_set_wormhole_address_payload(gi.payload), encoded_vm);
+            },
+            _ => {
+                // The `revert` function only accepts u64, so as
+                // a workaround we use require.
+                require(false, PythError::InvalidGovernanceMessage);
+            }
+        }
     }
 }
+
 
 #[storage(read, write)]
 fn verify_governance_vm(encoded_vm: Bytes) -> WormholeVM {
