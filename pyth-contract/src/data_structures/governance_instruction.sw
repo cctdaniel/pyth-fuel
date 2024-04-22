@@ -2,7 +2,7 @@ library;
 
 use ::errors::PythError;
 use ::data_structures::{data_source::*, price::*, wormhole_light::{StorageGuardianSet, WormholeVM}};
-use pyth_interface::data_structures::{data_source::DataSource, price::{PriceFeed, PriceFeedId}, governance_payload::{UpgradeContractPayload, AuthorizeGovernanceDataSourceTransferPayload, RequestGovernanceDataSourceTransferPayload}};
+use pyth_interface::data_structures::{data_source::DataSource, price::{PriceFeed, PriceFeedId}, governance_payload::{UpgradeContractPayload, AuthorizeGovernanceDataSourceTransferPayload, RequestGovernanceDataSourceTransferPayload, SetDataSourcesPayload}};
 use std::{bytes::Bytes, hash::Hash};
 
 pub struct GovernanceInstruction {
@@ -138,4 +138,34 @@ impl GovernanceInstruction {
         require(index == encoded_payload.len(), PythError::InvalidGovernanceMessage);
         rdgst
     }
+
+    pub fn parse_set_data_sources_payload(encoded_payload: Bytes) -> SetDataSourcesPayload {
+        let mut index = 0;
+        let data_sources_length = encoded_payload.get(index).unwrap().as_u64();
+        index += 1;
+        let mut data_sources = Vec::with_capacity(data_sources_length);
+
+        let mut i = 0;
+        while i < data_sources_length {
+            let (_, slice) = encoded_payload.split_at(index);
+            let (slice, _) = slice.split_at(2);
+            let chain_id = u16::from_be_bytes([slice.get(0).unwrap(), slice.get(1).unwrap()]);
+            index += 2;
+            let (_, slice) = encoded_payload.split_at(index);
+            let (slice, _) = slice.split_at(32);
+            let emitter_address: b256 = slice.into();
+            index += 32;
+
+            data_sources.push(DataSource {
+                chain_id,
+                emitter_address,
+            });
+            i += 1
+        }
+    
+        require(index == encoded_payload.len(), PythError::InvalidGovernanceMessage);
+        let sds = SetDataSourcesPayload { data_sources };
+        sds
+    }
+
 }

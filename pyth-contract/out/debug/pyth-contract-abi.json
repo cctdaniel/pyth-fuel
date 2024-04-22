@@ -3534,7 +3534,7 @@
       "logId": 256,
       "loggedType": {
         "name": "",
-        "type": 8,
+        "type": 6,
         "typeArguments": []
       }
     },
@@ -3646,12 +3646,20 @@
       "logId": 270,
       "loggedType": {
         "name": "",
-        "type": 6,
+        "type": 8,
         "typeArguments": []
       }
     },
     {
       "logId": 271,
+      "loggedType": {
+        "name": "",
+        "type": 6,
+        "typeArguments": []
+      }
+    },
+    {
+      "logId": 272,
       "loggedType": {
         "name": "",
         "type": 6,
@@ -3668,7 +3676,7 @@
         "type": 4,
         "typeArguments": []
       },
-      "offset": 316836
+      "offset": 318264
     }
   ]
 }

@@ -743,7 +743,6 @@ fn authorize_governance_data_source_transfer(payload: AuthorizeGovernanceDataSou
         new_data_source: new_governance_data_source,
         initial_sequence: vm.sequence,
     });
-
 }
 
 /// Returns a magic number for the contract.
@@ -784,7 +783,8 @@ impl PythGovernance for Contract {
                 authorize_governance_data_source_transfer(agdst);
             },
             GovernanceAction::SetDataSources => {
-                // set_data_sources(parse_set_data_sources_payload(gi.payload));
+                let sdsp = GovernanceInstruction::parse_set_data_sources_payload(gi.payload);
+                // set_data_sources(sdsp);
             },
             GovernanceAction::SetFee => {
                 // set_fee(parse_set_fee_payload(gi.payload));
