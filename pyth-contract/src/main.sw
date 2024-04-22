@@ -34,7 +34,7 @@ use ::data_structures::{
     wormhole_light::*,
     governance_instruction::{GovernanceInstruction, GovernanceAction},
 };
-use ::events::{ConstructedEvent, NewGuardianSetEvent, UpdatedPriceFeedsEvent, ContractUpgradedEvent, GovernanceDataSourceSetEvent};
+use ::events::{ConstructedEvent, NewGuardianSetEvent, UpdatedPriceFeedsEvent, ContractUpgradedEvent, GovernanceDataSourceSetEvent, DataSourcesSetEvent};
 
 use pyth_interface::{
     data_structures::{
@@ -44,7 +44,7 @@ use pyth_interface::{
             PriceFeed,
             PriceFeedId,
         },
-        governance_payload::{UpgradeContractPayload, AuthorizeGovernanceDataSourceTransferPayload},
+        governance_payload::{UpgradeContractPayload, AuthorizeGovernanceDataSourceTransferPayload, SetDataSourcesPayload},
         wormhole_light::{
             GuardianSet,
             WormholeProvider,
@@ -745,6 +745,37 @@ fn authorize_governance_data_source_transfer(payload: AuthorizeGovernanceDataSou
     });
 }
 
+#[storage(read, write)]
+fn set_data_sources(payload: SetDataSourcesPayload) {
+    let old_data_sources = storage.valid_data_sources.load_vec();
+
+    let mut i = 0;
+    while i < old_data_sources.len {
+        let data_source = old_data_sources.get(i).unwrap();
+        storage.is_valid_data_source.insert(data_source, false);
+        i += 1;
+    }
+
+    // Clear the current list of valid data sources
+    storage.valid_data_sources.clear();
+
+    i = 0;
+    // Add new data sources from the payload and mark them as valid
+    while i < payload.data_sources.len {
+        let data_source = payload.data_sources.get(i).unwrap();
+        storage.valid_data_sources.push(data_source);
+        storage.is_valid_data_source.insert(data_source, true);
+
+        i += 1;
+    }
+
+    // Emit an event with the old and new data sources
+    log(DataSourcesSetEvent {
+        old_data_sources: old_data_sources,
+        new_data_sources: storage.valid_data_sources.load_vec(),
+    });
+}
+
 /// Returns a magic number for the contract.
 fn pyth_upgradeable_magic() -> u32 {
     0x97a6f304
@@ -784,7 +815,7 @@ impl PythGovernance for Contract {
             },
             GovernanceAction::SetDataSources => {
                 let sdsp = GovernanceInstruction::parse_set_data_sources_payload(gi.payload);
-                // set_data_sources(sdsp);
+                set_data_sources(sdsp);
             },
             GovernanceAction::SetFee => {
                 // set_fee(parse_set_fee_payload(gi.payload));

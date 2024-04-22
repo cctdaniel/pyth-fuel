@@ -30,3 +30,9 @@ pub struct GovernanceDataSourceSetEvent {
     new_data_source: DataSource,
     initial_sequence: u64,
 }
+
+pub struct DataSourcesSetEvent {
+    old_data_sources: Vec<DataSource>,
+    new_data_sources: Vec<DataSource>,
+}
+
