@@ -26,6 +26,7 @@ pub enum PythError {
     InvalidUpdateDataLength: (),
     InvalidUpdateDataSource: (),
     InvalidUpgradeModule: (),
+    InvalidWormholeAddressToSet: (),
     LengthOfPriceFeedIdsAndPublishTimesMustMatch: (),
     NewGuardianSetIsEmpty: (),
     NumberOfUpdatesIrretrievable: (),

@@ -2,7 +2,7 @@ library;
 
 use ::errors::PythError;
 use ::data_structures::{data_source::*, price::*, wormhole_light::{StorageGuardianSet, WormholeVM}};
-use pyth_interface::data_structures::{data_source::DataSource, price::{PriceFeed, PriceFeedId}, governance_payload::{UpgradeContractPayload, AuthorizeGovernanceDataSourceTransferPayload, RequestGovernanceDataSourceTransferPayload, SetDataSourcesPayload, SetFeePayload, SetValidPeriodPayload}};
+use pyth_interface::data_structures::{data_source::DataSource, price::{PriceFeed, PriceFeedId}, governance_payload::{UpgradeContractPayload, AuthorizeGovernanceDataSourceTransferPayload, RequestGovernanceDataSourceTransferPayload, SetDataSourcesPayload, SetFeePayload, SetValidPeriodPayload, SetWormholeAddressPayload}};
 use std::{bytes::Bytes, hash::Hash};
 use std::math::*;
 use std::primitive_conversions::{u32::*, u64::*};
@@ -219,5 +219,17 @@ impl GovernanceInstruction {
             new_valid_period: valid_time_period_seconds,
         };
         svp
+    }
+
+    pub fn parse_set_wormhole_address_payload(encoded_payload: Bytes) -> SetWormholeAddressPayload {
+        let mut index = 0;
+        let (slice, _) = encoded_payload.split_at(20);
+        let wormhole_address: b256 = slice.into();
+        index += 20;
+        require(index == encoded_payload.len(), PythError::InvalidGovernanceMessage);
+        let swa = SetWormholeAddressPayload {
+            new_wormhole_address: wormhole_address,
+        };
+        swa
     }
 }

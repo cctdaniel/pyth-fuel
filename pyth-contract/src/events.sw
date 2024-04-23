@@ -46,3 +46,7 @@ pub struct ValidPeriodSetEvent {
     new_valid_period: u64,
 }
 
+pub struct WormholeAddressSetEvent {
+    old_wormhole_address: b256,
+    new_wormhole_address: b256,
+}

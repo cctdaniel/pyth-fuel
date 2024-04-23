@@ -28,3 +28,7 @@ pub struct SetValidPeriodPayload {
     new_valid_period: u64,
 }
 
+pub struct SetWormholeAddressPayload {
+    new_wormhole_address: b256,
+}
+
