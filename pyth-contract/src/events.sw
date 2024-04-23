@@ -36,3 +36,13 @@ pub struct DataSourcesSetEvent {
     new_data_sources: Vec<DataSource>,
 }
 
+pub struct FeeSetEvent {
+    old_fee: u64,
+    new_fee: u64,
+}
+
+pub struct ValidPeriodSetEvent {
+    old_valid_period: u64,
+    new_valid_period: u64,
+}
+

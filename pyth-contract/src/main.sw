@@ -34,7 +34,7 @@ use ::data_structures::{
     wormhole_light::*,
     governance_instruction::{GovernanceInstruction, GovernanceAction},
 };
-use ::events::{ConstructedEvent, NewGuardianSetEvent, UpdatedPriceFeedsEvent, ContractUpgradedEvent, GovernanceDataSourceSetEvent, DataSourcesSetEvent};
+use ::events::{ConstructedEvent, NewGuardianSetEvent, UpdatedPriceFeedsEvent, ContractUpgradedEvent, GovernanceDataSourceSetEvent, DataSourcesSetEvent, FeeSetEvent, ValidPeriodSetEvent};
 
 use pyth_interface::{
     data_structures::{
@@ -44,7 +44,7 @@ use pyth_interface::{
             PriceFeed,
             PriceFeedId,
         },
-        governance_payload::{UpgradeContractPayload, AuthorizeGovernanceDataSourceTransferPayload, SetDataSourcesPayload},
+        governance_payload::{UpgradeContractPayload, AuthorizeGovernanceDataSourceTransferPayload, SetDataSourcesPayload, SetFeePayload, SetValidPeriodPayload},
         wormhole_light::{
             GuardianSet,
             WormholeProvider,
@@ -776,6 +776,28 @@ fn set_data_sources(payload: SetDataSourcesPayload) {
     });
 }
 
+#[storage(read, write)]
+fn set_fee(payload: SetFeePayload) {
+    let old_fee = storage.single_update_fee.read();
+    storage.single_update_fee.write(payload.new_fee);
+
+    log(FeeSetEvent {
+        old_fee,
+        new_fee: payload.new_fee,
+    });
+}
+
+#[storage(read, write)]
+fn set_valid_period(payload: SetValidPeriodPayload) {
+    let old_valid_period = storage.valid_time_period_seconds.read();
+    storage.valid_time_period_seconds.write(payload.new_valid_period);
+
+    log(ValidPeriodSetEvent {
+        old_valid_period,
+        new_valid_period: payload.new_valid_period,
+    });
+}
+
 /// Returns a magic number for the contract.
 fn pyth_upgradeable_magic() -> u32 {
     0x97a6f304
@@ -818,10 +840,12 @@ impl PythGovernance for Contract {
                 set_data_sources(sdsp);
             },
             GovernanceAction::SetFee => {
-                // set_fee(parse_set_fee_payload(gi.payload));
+                let sf = GovernanceInstruction::parse_set_fee_payload(gi.payload);
+                set_fee(sf);
             },
             GovernanceAction::SetValidPeriod => {
-                // set_valid_period(parse_set_valid_period_payload(gi.payload));
+                let svp = GovernanceInstruction::parse_set_valid_period_payload(gi.payload);
+                set_valid_period(svp);
             },
             GovernanceAction::RequestGovernanceDataSourceTransfer => {
                 // RequestGovernanceDataSourceTransfer can be only part of AuthorizeGovernanceDataSourceTransfer message

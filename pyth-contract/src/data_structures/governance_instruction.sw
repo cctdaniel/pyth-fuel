@@ -2,8 +2,10 @@ library;
 
 use ::errors::PythError;
 use ::data_structures::{data_source::*, price::*, wormhole_light::{StorageGuardianSet, WormholeVM}};
-use pyth_interface::data_structures::{data_source::DataSource, price::{PriceFeed, PriceFeedId}, governance_payload::{UpgradeContractPayload, AuthorizeGovernanceDataSourceTransferPayload, RequestGovernanceDataSourceTransferPayload, SetDataSourcesPayload}};
+use pyth_interface::data_structures::{data_source::DataSource, price::{PriceFeed, PriceFeedId}, governance_payload::{UpgradeContractPayload, AuthorizeGovernanceDataSourceTransferPayload, RequestGovernanceDataSourceTransferPayload, SetDataSourcesPayload, SetFeePayload, SetValidPeriodPayload}};
 use std::{bytes::Bytes, hash::Hash};
+use std::math::*;
+use std::primitive_conversions::{u32::*, u64::*};
 
 pub struct GovernanceInstruction {
     magic: u32,
@@ -108,11 +110,11 @@ impl GovernanceInstruction {
     pub fn parse_upgrade_contract_payload(encoded_payload: Bytes) -> UpgradeContractPayload {
         let mut index = 0;
         let b256_encoded_payload: b256 = encoded_payload.into();
+        index += 20;
+        require(index == encoded_payload.len(), PythError::InvalidGovernanceMessage);
         let uc = UpgradeContractPayload {
             new_implementation: Identity::Address(Address::from(b256_encoded_payload)),
         };
-        index += 20;
-        require(index == encoded_payload.len(), PythError::InvalidGovernanceMessage);
         uc
     }
 
@@ -131,11 +133,11 @@ impl GovernanceInstruction {
             encoded_payload.get(index + 2).unwrap(),
             encoded_payload.get(index + 3).unwrap(),
         ]);
+        index += 4;
+        require(index == encoded_payload.len(), PythError::InvalidGovernanceMessage);
         let rdgst = RequestGovernanceDataSourceTransferPayload {
             governance_data_source_index,
         };
-        index += 4;
-        require(index == encoded_payload.len(), PythError::InvalidGovernanceMessage);
         rdgst
     }
 
@@ -168,4 +170,54 @@ impl GovernanceInstruction {
         sds
     }
 
+    pub fn parse_set_fee_payload(encoded_payload: Bytes) -> SetFeePayload {
+        let mut index = 0;
+        let val = u64::from_be_bytes([
+            encoded_payload.get(index).unwrap(),
+            encoded_payload.get(index + 1).unwrap(),
+            encoded_payload.get(index + 2).unwrap(),
+            encoded_payload.get(index + 3).unwrap(),
+            encoded_payload.get(index + 4).unwrap(),
+            encoded_payload.get(index + 5).unwrap(),
+            encoded_payload.get(index + 6).unwrap(),
+            encoded_payload.get(index + 7).unwrap(),
+        ]);
+        index += 8;
+        let expo = u64::from_be_bytes([
+            encoded_payload.get(index).unwrap(),
+            encoded_payload.get(index + 1).unwrap(),
+            encoded_payload.get(index + 2).unwrap(),
+            encoded_payload.get(index + 3).unwrap(),
+            encoded_payload.get(index + 4).unwrap(),
+            encoded_payload.get(index + 5).unwrap(),
+            encoded_payload.get(index + 6).unwrap(),
+            encoded_payload.get(index + 7).unwrap(),
+        ]);
+        index += 8;
+        require(encoded_payload.len() == index, PythError::InvalidGovernanceMessage);
+        let sf = SetFeePayload {
+            new_fee: val * 10u64.pow(expo.try_as_u32().unwrap()),
+        };
+        sf
+    }
+
+    pub fn parse_set_valid_period_payload(encoded_payload: Bytes) -> SetValidPeriodPayload {
+        let mut index = 0;
+        let valid_time_period_seconds = u64::from_be_bytes([
+            encoded_payload.get(index).unwrap(),
+            encoded_payload.get(index + 1).unwrap(),
+            encoded_payload.get(index + 2).unwrap(),
+            encoded_payload.get(index + 3).unwrap(),
+            encoded_payload.get(index + 4).unwrap(),
+            encoded_payload.get(index + 5).unwrap(),
+            encoded_payload.get(index + 6).unwrap(),
+            encoded_payload.get(index + 7).unwrap(),
+        ]);
+        index += 8;
+        require(index == encoded_payload.len(), PythError::InvalidGovernanceMessage);
+        let svp = SetValidPeriodPayload {
+            new_valid_period: valid_time_period_seconds,
+        };
+        svp
+    }
 }

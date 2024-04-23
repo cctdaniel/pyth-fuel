@@ -19,3 +19,12 @@ pub struct RequestGovernanceDataSourceTransferPayload {
 pub struct SetDataSourcesPayload {
     data_sources: Vec<DataSource>,
 }
+
+pub struct SetFeePayload {
+    new_fee: u64,
+}
+
+pub struct SetValidPeriodPayload {
+    new_valid_period: u64,
+}
+
