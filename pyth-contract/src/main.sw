@@ -73,6 +73,7 @@ storage {
     // Mapping of cached price information
     // priceId => PriceInfo
     latest_price_feed: StorageMap<PriceFeedId, PriceFeed> = StorageMap {},
+    // Fee required for each update
     single_update_fee: u64 = 0,
     // For tracking all active emitter/chain ID pairs
     valid_data_sources: StorageVec<DataSource> = StorageVec {},
